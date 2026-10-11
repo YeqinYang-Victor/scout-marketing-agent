@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "brokerName": "示例证券",
+  "productName": "产业链侦察兵",
+  "slogan": "每日一条产业链，读懂市场风向",
+  "colors": {
+    "primary": "#C7000B",
+    "primaryDark": "#8E0007",
+    "secondary": "#14224A",
+    "accent": "#E8A33D",
+    "bg": "#FFFFFF",
+    "bgSoft": "#F5F6FA",
+    "text": "#14224A",
+    "textMuted": "#6B7590",
+    "up": "#C7000B",
+    "down": "#0F9D58"
+  },
+  "bannerSize": {
+    "width": 1080,
+    "height": 608
+  },
+  "footer": {
+    "qrHint": "扫码开户 · 领取每日产业链情报",
+    "disclaimer": "本内容由 AI 辅助生成，仅供参考，不构成投资建议。市场有风险，投资需谨慎。",
+    "complianceCode": "投顾编号：S0000000000000"
+  },
+  "fontFamily": "PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif"
+}

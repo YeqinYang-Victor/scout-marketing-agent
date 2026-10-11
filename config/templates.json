@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "activeTemplateId": "scout-daily-standard",
+  "note": "文案模板库。body 使用 {{变量}} 占位符，支持 {{#each 数组}}...{{/each}} 与 {{#if 变量}}...{{/if}}。fields 声明该模板需要 AI/规则引擎产出哪些内容字段。",
+  "templates": [
+    {
+      "id": "scout-daily-standard",
+      "name": "产业链侦察兵·日报（标准版）",
+      "channel": "企业微信 / 微信",
+      "description": "客户经理可直接转发的标准日报，含事件速览、影响解读、产业链传导、受益方向与风险提示。",
+      "maxLength": 900,
+      "enabled": true,
+      "fields": [
+        { "key": "impactAnalysis", "label": "影响解读", "type": "text", "maxChars": 140, "prompt": "用 2-3 句话说明该事件对市场的核心影响与传导逻辑，专业但通俗。" },
+        { "key": "chainUp", "label": "上游环节", "type": "text", "maxChars": 40, "prompt": "该产业链上游的原材料/设备环节。" },
+        { "key": "chainMid", "label": "中游环节", "type": "text", "maxChars": 40, "prompt": "该产业链中游的制造/加工环节。" },
+        { "key": "chainDown", "label": "下游环节", "type": "text", "maxChars": 40, "prompt": "该产业链下游的应用/需求环节。" },
+        { "key": "beneficiaryList", "label": "受益方向", "type": "list", "maxItems": 4, "prompt": "3-4 个受益方向，每项含名称、可选代码、一句话理由。" },
+        { "key": "riskNote", "label": "风险提示", "type": "text", "maxChars": 90, "prompt": "该事件对应的主要风险点。" }
+      ],
+      "body": "【产业链侦察兵·{{date}} {{weekday}}】\n\n🔥 今日头号事件｜{{eventTitle}}\n\n📌 事件速览\n{{eventSummary}}\n\n📊 影响解读\n{{impactAnalysis}}\n\n🔗 产业链传导\n· 上游｜{{chainUp}}\n· 中游｜{{chainMid}}\n· 下游｜{{chainDown}}\n\n🎯 受益方向\n{{#each beneficiaryList}}· {{this.name}}{{#if this.code}}（{{this.code}}）{{/if}}：{{this.reason}}\n{{/each}}\n⚠️ 风险提示\n{{riskNote}}\n\n———\n{{brokerName}} · {{productName}}\n{{disclaimer}}"
+    },
+    {
+      "id": "scout-flash",
+      "name": "产业链侦察兵·快讯版（短）",
+      "channel": "微信群 / 朋友圈",
+      "description": "300 字以内的短文案，适合盘中快速触达。",
+      "maxLength": 320,
+      "enabled": true,
+      "fields": [
+        { "key": "impactAnalysis", "label": "影响解读", "type": "text", "maxChars": 70, "prompt": "一句话点明核心影响。" }
+      ],
+      "body": "【产业链侦察兵·快讯】{{date}}\n\n⚡ {{eventTitle}}\n\n{{impactAnalysis}}\n\n{{#if sectors}}#{{#each sectors}}{{this}} {{/each}}\n\n{{/if}}{{brokerName}} · {{productName}}"
+    },
+    {
+      "id": "scout-deep",
+      "name": "产业链侦察兵·深度版",
+      "channel": "公众号 / 长图文",
+      "description": "面向高净值客户的深度解读，含事件背景、传导路径与风险提示。",
+      "maxLength": 1800,
+      "enabled": true,
+      "fields": [
+        { "key": "eventBackground", "label": "事件背景", "type": "text", "maxChars": 200, "prompt": "交代事件来龙去脉与关键数据。" },
+        { "key": "impactAnalysis", "label": "影响解读", "type": "text", "maxChars": 260, "prompt": "分层次解读对市场、行业、个股的影响。" },
+        { "key": "chainUp", "label": "上游环节", "type": "text", "maxChars": 60, "prompt": "上游环节与代表方向。" },
+        { "key": "chainMid", "label": "中游环节", "type": "text", "maxChars": 60, "prompt": "中游环节与代表方向。" },
+        { "key": "chainDown", "label": "下游环节", "type": "text", "maxChars": 60, "prompt": "下游环节与代表方向。" },
+        { "key": "beneficiaryList", "label": "受益方向", "type": "list", "maxItems": 5, "prompt": "4-5 个受益方向，每项含名称、可选代码、一句话理由。" },
+        { "key": "riskNote", "label": "风险提示", "type": "text", "maxChars": 140, "prompt": "系统梳理风险点。" }
+      ],
+      "body": "【产业链侦察兵·深度解读】{{date}}\n\n━━━ 事件背景 ━━━\n{{eventBackground}}\n\n━━━ 影响解读 ━━━\n{{impactAnalysis}}\n\n━━━ 产业链传导路径 ━━━\n上游｜{{chainUp}}\n中游｜{{chainMid}}\n下游｜{{chainDown}}\n\n━━━ 受益方向 ━━━\n{{#each beneficiaryList}}· {{this.name}}{{#if this.code}}（{{this.code}}）{{/if}}：{{this.reason}}\n{{/each}}\n━━━ 风险提示 ━━━\n{{riskNote}}\n\n———\n{{brokerName}} · {{productName}}｜{{slogan}}\n{{disclaimer}}"
+    }
+  ]
+}

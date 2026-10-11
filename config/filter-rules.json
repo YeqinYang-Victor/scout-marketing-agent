@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "note": "筛选规则：五维加权打分模型。每个维度分值 0-100，总分 = Σ(维度分 × 权重)。权重已按主数据源（示例数据源·热点事件）的字段特征校准：该源每个事件固定 3 个板块、无原生热度字段、且为跨度约 30 天的滚动窗口列表。",
+  "dimensions": [
+    {
+      "key": "marketImpact",
+      "label": "市场影响力",
+      "weight": 0.38,
+      "enabled": true,
+      "description": "综合热度值与相关板块涨跌幅。主数据源无原生热度字段，由板块涨跌幅折算（见数据源 derive.heatPerPercent）。A 股板块单日涨跌 6% 已属极端行情，故 changeCeiling 取 6。",
+      "params": {
+        "heatCeiling": 1200000,
+        "changeCeiling": 6,
+        "heatShare": 0.6,
+        "changeShare": 0.4
+      }
+    },
+    {
+      "key": "industryCoverage",
+      "label": "行业覆盖面",
+      "weight": 0.12,
+      "enabled": true,
+      "description": "事件牵动的行业数量，以及是否同时覆盖上游/中游/下游。注意：主数据源每个事件固定 3 个板块，本维度区分度主要来自产业链环节完整度，故权重下调至 0.12。",
+      "params": {
+        "sectorCeiling": 6,
+        "sectorShare": 0.5,
+        "chainShare": 0.5
+      }
+    },
+    {
+      "key": "timeliness",
+      "label": "时效性",
+      "weight": 0.26,
+      "enabled": true,
+      "description": "按发布距今小时数做半衰期衰减（半衰期 12 小时，越新得分越高）。当日发布的条目额外获得 sameDayBonus 加成，确保「优先当天的热点」。注意：进入打分环节的条目已由硬性过滤限定为「最近 maxTradingDays 个交易日」，因此这里的时间衰减只在交易日窗口内部起区分作用。",
+      "params": {
+        "halfLifeHours": 12,
+        "sameDayBonus": 15
+      }
+    },
+    {
+      "key": "policyRelevance",
+      "label": "政策关联度",
+      "weight": 0.14,
+      "enabled": true,
+      "description": "命中政策类关键词（部委、规划、会议、试点等）越多得分越高。",
+      "params": {
+        "keywords": [
+          "国务院", "发改委", "央行", "人民银行", "证监会", "财政部", "工信部", "国资委",
+          "国家能源局", "科技部", "商务部", "市场监管总局", "文旅部", "外交部",
+          "五年规划", "十五五", "十四五", "政策", "试点", "专项债", "国家标准", "国际标准",
+          "降准", "降息", "国常会", "中央经济工作会议", "两会", "新质生产力", "国产替代"
+        ],
+        "perHitScore": 25
+      }
+    },
+    {
+      "key": "clientRelevance",
+      "label": "客户相关性",
+      "weight": 0.1,
+      "enabled": true,
+      "description": "与零售客户关注度的匹配程度：热门赛道、通俗易懂、可落地到具体标的。采用模糊包含匹配（如「算力」可命中「算力芯片」）。",
+      "params": {
+        "hotSectors": [
+          "人工智能", "半导体", "算力", "机器人", "新能源", "储能", "医药", "创新药",
+          "消费电子", "军工", "低空经济", "固态电池", "有色金属", "券商", "地产",
+          "光模块", "光通信", "先进封装", "存储芯片", "电力设备", "特高压", "黄金", "石油"
+        ],
+        "baseScore": 40,
+        "perHotSector": 15
+      }
+    }
+  ],
+  "keywordBoosts": [
+    { "keyword": "万亿", "delta": 8 },
+    { "keyword": "涨停潮", "delta": 8 },
+    { "keyword": "暴涨", "delta": 6 },
+    { "keyword": "历史新高", "delta": 6 },
+    { "keyword": "创新高", "delta": 5 },
+    { "keyword": "重大突破", "delta": 6 },
+    { "keyword": "首次", "delta": 4 },
+    { "keyword": "全面", "delta": 3 },
+    { "keyword": "超预期", "delta": 5 },
+    { "keyword": "上调", "delta": 4 },
+    { "keyword": "涨价", "delta": 4 }
+  ],
+  "keywordPenalties": [
+    { "keyword": "广告", "delta": -50 },
+    { "keyword": "招聘", "delta": -50 },
+    { "keyword": "更正", "delta": -20 },
+    { "keyword": "辟谣", "delta": -15 }
+  ],
+  "excludeKeywords": ["广告", "招聘", "抽奖", "直播预告", "免责声明"],
+  "sectorWhitelist": [],
+  "sectorBlacklist": [],
+  "hardFilters": {
+    "minHeat": 0,
+    "requireSectors": false,
+    "maxTradingDays": 2,
+    "maxStaleTradingDays": 1
+  },
+  "topN": 1
+}

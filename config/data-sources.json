@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "activeSourceId": "demo-builtin",
+  "sources": [
+    {
+      "id": "demo-builtin",
+      "name": "内置演示数据源",
+      "type": "mock",
+      "enabled": true,
+      "note": "无需账号密码，用于本地演示与联调。生产环境请切换为真实订阅源。",
+      "config": {
+        "datasetId": "default",
+        "count": 14
+      }
+    },
+    {
+      "id": "subscribed-portal",
+      "name": "示例金融数据源（已订阅 · 热点事件）",
+      "type": "http-login",
+      "enabled": false,
+      "note": "「账号密码登录 + JSON 接口」的完整示例模板，域名与接口路径均为占位值。要用它接入你自己的订阅站：① 把 loginUrl / listUrl / headers 换成真实地址；② 账号密码写进 .env 的 ZEN_USER / ZEN_PASS（配置里用 ${ZEN_USER} 引用，不要把明文写进本文件）；③ 把 enabled 改为 true 并设为 activeSourceId。适配器支持 multipart 表单登录、业务码校验（retCode）、Authorization 头鉴权、以及「事件 → 板块 → 个股/ETF」的嵌套结构映射。",
+      "config": {
+        "authMode": "header",
+        "loginUrl": "https://api.your-subscribed-site.com/login",
+        "loginMethod": "POST",
+        "loginContentType": "multipart/form-data",
+        "loginBody": {
+          "name": "{{username}}",
+          "pwd": "{{password}}"
+        },
+        "credentials": {
+          "username": "${ZEN_USER}",
+          "password": "${ZEN_PASS}"
+        },
+        "tokenPath": "data.token",
+        "successCodePath": "retCode",
+        "successCode": "000",
+        "messagePath": "retMsg",
+        "listUrl": "https://api.your-subscribed-site.com/eventSector/findEventRelateSecurityETF?page=1&size=50",
+        "listMethod": "GET",
+        "headers": {
+          "Origin": "https://www.your-subscribed-site.com",
+          "Referer": "https://www.your-subscribed-site.com/",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        },
+        "cache": {
+          "ttlMinutes": 720
+        },
+        "parser": {
+          "kind": "json",
+          "itemsPath": "",
+          "fieldMap": {
+            "title": "eventName",
+            "publishedAt": "eventDate",
+            "code": "eventCode"
+          },
+          "sectorListPath": "sectorList",
+          "sectorFieldMap": {
+            "name": "sectorName",
+            "change": "increase",
+            "remark": "sectorRemark",
+            "type": "sectorType"
+          },
+          "securityListPath": "securityList",
+          "securityFieldMap": {
+            "name": "name",
+            "code": "code",
+            "change": "increase"
+          },
+          "etfListPath": "etfList",
+          "etfFieldMap": {
+            "name": "name",
+            "code": "code",
+            "change": "increase"
+          },
+          "derive": {
+            "marketChange": "maxSectorChange",
+            "heatPerPercent": 200000,
+            "summaryFrom": "sectorReaction",
+            "contentFrom": "allSectorRemarks"
+          }
+        },
+        "timeoutMs": 20000
+      }
+    },
+    {
+      "id": "subscribed-html",
+      "name": "已订阅金融资讯站（HTML 抓取）",
+      "type": "http-login",
+      "enabled": false,
+      "note": "当订阅站没有开放 API 时，用 CSS 选择器从页面抓取列表。",
+      "config": {
+        "authMode": "cookie",
+        "loginUrl": "https://your-subscribed-site.com/login",
+        "loginMethod": "POST",
+        "loginContentType": "application/x-www-form-urlencoded",
+        "loginBody": {
+          "username": "{{username}}",
+          "password": "{{password}}"
+        },
+        "credentials": {
+          "username": "",
+          "password": ""
+        },
+        "listUrl": "https://your-subscribed-site.com/hot?date={{date}}",
+        "listMethod": "GET",
+        "headers": {},
+        "parser": {
+          "kind": "html",
+          "itemSelector": ".news-list .news-item",
+          "fieldMap": {
+            "title": { "selector": ".title", "attr": "text" },
+            "summary": { "selector": ".digest", "attr": "text" },
+            "url": { "selector": "a", "attr": "href" },
+            "publishedAt": { "selector": ".time", "attr": "text" },
+            "heat": { "selector": ".hot", "attr": "text" }
+          }
+        },
+        "timeoutMs": 15000
+      }
+    },
+    {
+      "id": "rss-finance",
+      "name": "财经 RSS 聚合源",
+      "type": "rss",
+      "enabled": false,
+      "note": "无需登录，适合作为补充信源。",
+      "config": {
+        "feedUrl": "https://example.com/finance/rss.xml",
+        "timeoutMs": 15000
+      }
+    },
+    {
+      "id": "local-mock-site",
+      "name": "本地模拟订阅站（账号密码 · JSON 接口）",
+      "type": "http-login",
+      "enabled": false,
+      "note": "联调专用：先执行 npm run mock-site 启动模拟站点（端口 4100），即可在不接真实订阅账号的情况下跑通「账号密码登录」全链路。",
+      "config": {
+        "authMode": "cookie",
+        "loginUrl": "http://127.0.0.1:4100/api/login",
+        "loginMethod": "POST",
+        "loginContentType": "application/json",
+        "loginBody": {
+          "username": "{{username}}",
+          "password": "{{password}}"
+        },
+        "credentials": {
+          "username": "demo",
+          "password": "demo123"
+        },
+        "tokenPath": "data.token",
+        "listUrl": "http://127.0.0.1:4100/api/hot?date={{date}}&limit=50",
+        "listMethod": "GET",
+        "headers": {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+        },
+        "parser": {
+          "kind": "json",
+          "itemsPath": "data.list",
+          "fieldMap": {
+            "title": "news_title",
+            "summary": "news_digest",
+            "content": "news_body",
+            "url": "news_url",
+            "publishedAt": "publish_ts",
+            "heat": "hot_index",
+            "sectors": "industry_tags",
+            "stocks": "rel_stocks",
+            "marketChange": "sector_pct"
+          }
+        },
+        "timeoutMs": 15000
+      }
+    },
+    {
+      "id": "local-mock-site-html",
+      "name": "本地模拟订阅站（账号密码 · HTML 抓取）",
+      "type": "http-login",
+      "enabled": false,
+      "note": "联调专用：验证没有开放 API 时，用 CSS 选择器从页面抓取列表的路径。同样需要先执行 npm run mock-site。",
+      "config": {
+        "authMode": "cookie",
+        "loginUrl": "http://127.0.0.1:4100/api/login",
+        "loginMethod": "POST",
+        "loginContentType": "application/json",
+        "loginBody": {
+          "username": "{{username}}",
+          "password": "{{password}}"
+        },
+        "credentials": {
+          "username": "demo",
+          "password": "demo123"
+        },
+        "listUrl": "http://127.0.0.1:4100/hot",
+        "listMethod": "GET",
+        "headers": {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+        },
+        "parser": {
+          "kind": "html",
+          "itemSelector": ".news-list .news-item",
+          "fieldMap": {
+            "title": { "selector": ".title", "attr": "text" },
+            "summary": { "selector": ".digest", "attr": "text" },
+            "url": { "selector": "a", "attr": "href" },
+            "publishedAt": { "selector": ".time", "attr": "text" },
+            "heat": { "selector": ".hot", "attr": "text" }
+          }
+        },
+        "timeoutMs": 15000
+      }
+    }
+  ]
+}
