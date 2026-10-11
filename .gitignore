@@ -1,0 +1,30 @@
+# ---------- 依赖 ----------
+node_modules/
+
+# ---------- 构建产物 ----------
+dist/
+*.tsbuildinfo
+
+# ---------- 运行时数据（跑流水线后自动生成，不入库）----------
+# server/data/ 含运行记录、Banner、数据源响应缓存
+server/data/
+output/
+
+# ---------- 本地配置与凭据 ----------
+# 真实账号密码放这里，不要写进 config/ 下的配置文件
+.env
+.env.local
+.env.*.local
+# 含真实域名/凭据的私有配置备份
+config/*.private.json
+
+# ---------- 工具与工作区元数据 ----------
+# WorkBuddy AI 的工作区数据（含记忆与会话记录），不应发布
+.workbuddy-ai/
+
+# ---------- 系统与编辑器 ----------
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
