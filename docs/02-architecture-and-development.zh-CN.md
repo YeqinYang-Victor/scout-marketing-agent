@@ -1,4 +1,4 @@
-[English](./02-architecture-and-development.en.md) | **简体中文**
+[English](./02-architecture-and-development.md) | **简体中文**
 
 # 架构与二次开发指南
 

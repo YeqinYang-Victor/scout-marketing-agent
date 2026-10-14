@@ -1,4 +1,4 @@
-**English** | [简体中文](./02-架构与二次开发.md)
+**English** | [简体中文](./02-architecture-and-development.zh-CN.md)
 
 # Architecture & Extension Guide
 

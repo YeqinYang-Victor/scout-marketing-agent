@@ -1,4 +1,4 @@
-[English](./01-open-source-evaluation.en.md) | **简体中文**
+[English](./01-open-source-evaluation.md) | **简体中文**
 
 # 开源选型评估报告
 

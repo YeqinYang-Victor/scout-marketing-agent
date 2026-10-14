@@ -1,4 +1,4 @@
-**English** | [简体中文](./工作台设计说明.md)
+**English** | [简体中文](./workbench-design-notes.zh-CN.md)
 
 # Workbench Design Notes (v2)
 
