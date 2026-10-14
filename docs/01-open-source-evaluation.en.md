@@ -1,9 +1,9 @@
+**English** | [简体中文](./01-开源选型评估.md)
+
 # Open-Source Evaluation Report
 
-**English** ｜ [中文](01-开源选型评估.md)
-
 > Goal: pick a reusable base project for the *Chain Scout* brokerage marketing-copy pipeline.
-> Surveyed: 2026-10-06 ｜ Source: GitHub API (`api.github.com`), read live
+> Surveyed: 2026-10-06 | Source: GitHub API (`api.github.com`), read live
 
 ---
 

@@ -1,6 +1,6 @@
-# 产业链侦察兵 · 券商营销文案自动化生产 Agent
+[English](./README.en.md) | **简体中文**
 
-**中文** ｜ [English](README.en.md)
+# 产业链侦察兵 · 券商营销文案自动化生产 Agent
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)

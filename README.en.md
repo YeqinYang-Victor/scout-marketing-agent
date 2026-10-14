@@ -1,6 +1,6 @@
-# Chain Scout — Automated Marketing Copy Pipeline for Brokerages
+**English** | [简体中文](./README.md)
 
-**English** ｜ [中文](README.md)
+# Chain Scout — Automated Marketing Copy Pipeline for Brokerages
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)

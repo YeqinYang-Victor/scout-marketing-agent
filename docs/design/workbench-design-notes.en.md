@@ -1,6 +1,6 @@
-# Workbench Design Notes (v2)
+**English** | [简体中文](./工作台设计说明.md)
 
-**English** ｜ [中文](工作台设计说明.md)
+# Workbench Design Notes (v2)
 
 > A redesign of the "daily briefing" workbench for **brokerage relationship managers**.
 > Interactive prototype: [`工作台设计稿.html`](./工作台设计稿.html) — open it directly in a browser;
@@ -99,7 +99,7 @@ RMs are on phones a great deal. The prototype includes a mobile form:
 
 ```
 Today's Workbench
-├── Header      Today's Workbench · date ｜ History · Generation settings · avatar
+├── Header      Today's Workbench · date | History · Generation settings · avatar
 ├── Empty state
 │   ├── Welcome card   greeting + the single primary button "Generate today's briefing"
 │   ├── Generation settings  data source / template / AI polish (quiet pills)

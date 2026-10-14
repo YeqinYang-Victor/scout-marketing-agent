@@ -1,6 +1,6 @@
-# Architecture & Extension Guide
+**English** | [简体中文](./02-架构与二次开发.md)
 
-**English** ｜ [中文](02-架构与二次开发.md)
+# Architecture & Extension Guide
 
 ## 1. Overall Architecture
 
