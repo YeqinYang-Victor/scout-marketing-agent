@@ -1,5 +1,7 @@
 # 产业链侦察兵 · 券商营销文案自动化生产 Agent
 
+**中文** ｜ [English](README.en.md)
+
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)
@@ -10,7 +12,9 @@
 > 把「每日金融市场热点」自动变成**客户经理可直接转发的日报文案 + App 首页 Banner**。
 > 一条命令完成 `抓取 → 筛选 → 改写 → 配图`，全部环节可在界面上配置，无需改代码。
 
-**English** — An end-to-end content pipeline for retail brokerage marketing: it ingests market news from a subscribed data source, ranks it with a configurable five-dimension scoring model, rewrites the top story into client-ready copy using a template engine (with optional LLM polish), and renders a brand-compliant banner — all driven by JSON config and a React workbench.
+> **关于语言** —— 产品界面与生成的营销文案是中文的，因为目标用户是国内券商的客户经理。
+> 文档提供中英双语：`docs/` 下每份文档都有对应的英文版（`*.en.md`），
+> 英文入口见 [English README](README.en.md)。
 
 ---
 
@@ -199,6 +203,12 @@ npm test                  # 交易日历 + 交易日窗口过滤的回归测试
 npm run typecheck         # 前后端类型检查
 ```
 
+### 持续集成
+
+每次 push / PR 会自动执行 `npm ci → 类型检查 → 回归测试 → 生产构建 → 流水线冒烟测试`，
+并在 **Node 20 / 22** 双版本矩阵上验证（对应上方 CI 徽章）。
+配置见 [`.github/workflows/ci.yml`](.github/workflows/ci.yml)。
+
 ---
 
 ## 使用说明
@@ -301,7 +311,15 @@ npm run pipeline -- --source local-mock-site-html # 走「CSS 选择器抓取」
 │   └── test-trading-*.ts          回归测试
 │
 └── docs/                          设计文档与截图
+    ├── 01-开源选型评估.md             选型对比与取舍
+    ├── 01-open-source-evaluation.en.md        └ 英文版
+    ├── 02-架构与二次开发.md          架构说明与扩展指南
+    ├── 02-architecture-and-development.en.md  └ 英文版
+    ├── design/                     工作台设计说明 + 可交互原型
+    └── images/                     README 用到的截图
 ```
+
+> 文档为中英双语：每份中文文档都有对应的英文版（`.en.md`，文件名为 ASCII 便于分享）。
 
 ---
 
